@@ -62,7 +62,7 @@ export const MenuCard = ({
             </div>
           </div>
           <div className="text-right">
-            <p className="text-xl font-bold text-primary">${price.toFixed(2)}</p>
+            <p className="text-xl font-bold text-primary">₹{price}</p>
             {prepTime && (
               <p className="text-xs text-muted-foreground">{prepTime} min</p>
             )}

@@ -1,4 +1,3 @@
-import { AuthGuard } from '@/components/auth/AuthGuard';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
@@ -39,8 +38,7 @@ const AdminDashboard = () => {
   ];
 
   return (
-    <AuthGuard allowedRoles={['admin']}>
-      <div className="min-h-screen bg-gradient-to-br from-background via-muted to-background">
+    <div className="min-h-screen bg-gradient-to-br from-background via-muted to-background">
         {/* Header */}
         <header className="border-b bg-card shadow-sm">
           <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -102,7 +100,6 @@ const AdminDashboard = () => {
           </Card>
         </main>
       </div>
-    </AuthGuard>
   );
 };
 

@@ -11,6 +11,11 @@ import StaffDashboard from "./pages/StaffDashboard";
 import CustomerDashboard from "./pages/CustomerDashboard";
 import MenuPage from "./pages/customer/MenuPage";
 import TableManagement from "./pages/admin/TableManagement";
+import MenuManagement from "./pages/admin/MenuManagement";
+import StaffManagement from "./pages/admin/StaffManagement";
+import KitchenDisplay from "./pages/admin/KitchenDisplay";
+import OrdersManagement from "./pages/admin/OrdersManagement";
+import ReservationsManagement from "./pages/admin/ReservationsManagement";
 import Unauthorized from "./pages/Unauthorized";
 import NotFound from "./pages/NotFound";
 
@@ -33,6 +38,31 @@ const App = () => (
           <Route path="/admin/tables" element={
             <AuthGuard allowedRoles={['admin', 'staff']}>
               <TableManagement />
+            </AuthGuard>
+          } />
+          <Route path="/admin/menu" element={
+            <AuthGuard allowedRoles={['admin']}>
+              <MenuManagement />
+            </AuthGuard>
+          } />
+          <Route path="/admin/staff" element={
+            <AuthGuard allowedRoles={['admin']}>
+              <StaffManagement />
+            </AuthGuard>
+          } />
+          <Route path="/admin/kitchen" element={
+            <AuthGuard allowedRoles={['admin', 'staff']}>
+              <KitchenDisplay />
+            </AuthGuard>
+          } />
+          <Route path="/admin/orders" element={
+            <AuthGuard allowedRoles={['admin', 'staff']}>
+              <OrdersManagement />
+            </AuthGuard>
+          } />
+          <Route path="/admin/reservations" element={
+            <AuthGuard allowedRoles={['admin', 'staff']}>
+              <ReservationsManagement />
             </AuthGuard>
           } />
           <Route path="/staff" element={

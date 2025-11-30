@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Plus, RefreshCw } from 'lucide-react';
+import { Plus, RefreshCw, ArrowLeft } from 'lucide-react';
 import { TableFloorPlan } from '@/components/tables/TableFloorPlan';
 import { AddTableDialog } from '@/components/tables/AddTableDialog';
 
@@ -17,6 +18,7 @@ interface Table {
 }
 
 const TableManagement = () => {
+  const navigate = useNavigate();
   const [tables, setTables] = useState<Table[]>([]);
   const [loading, setLoading] = useState(true);
   const [addDialogOpen, setAddDialogOpen] = useState(false);
@@ -116,8 +118,11 @@ const TableManagement = () => {
   return (
     <div className="min-h-screen bg-background p-6">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between mb-6">
-          <div>
+        <div className="flex items-center gap-4 mb-6">
+          <Button variant="ghost" size="icon" onClick={() => navigate('/admin')}>
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
+          <div className="flex-1">
             <h1 className="text-3xl font-bold text-foreground">Table Management</h1>
             <p className="text-muted-foreground mt-1">Manage restaurant floor plan and table status</p>
           </div>

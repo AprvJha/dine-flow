@@ -10,12 +10,19 @@ import AdminDashboard from "./pages/AdminDashboard";
 import StaffDashboard from "./pages/StaffDashboard";
 import CustomerDashboard from "./pages/CustomerDashboard";
 import MenuPage from "./pages/customer/MenuPage";
+import MyReservations from "./pages/customer/MyReservations";
+import MyOrders from "./pages/customer/MyOrders";
+import Reviews from "./pages/customer/Reviews";
 import TableManagement from "./pages/admin/TableManagement";
 import MenuManagement from "./pages/admin/MenuManagement";
 import StaffManagement from "./pages/admin/StaffManagement";
 import KitchenDisplay from "./pages/admin/KitchenDisplay";
 import OrdersManagement from "./pages/admin/OrdersManagement";
 import ReservationsManagement from "./pages/admin/ReservationsManagement";
+import StaffTables from "./pages/staff/StaffTables";
+import TakeOrder from "./pages/staff/TakeOrder";
+import StaffKitchen from "./pages/staff/StaffKitchen";
+import ActiveOrders from "./pages/staff/ActiveOrders";
 import Unauthorized from "./pages/Unauthorized";
 import NotFound from "./pages/NotFound";
 
@@ -70,6 +77,26 @@ const App = () => (
               <StaffDashboard />
             </AuthGuard>
           } />
+          <Route path="/staff/tables" element={
+            <AuthGuard allowedRoles={['staff']}>
+              <StaffTables />
+            </AuthGuard>
+          } />
+          <Route path="/staff/orders" element={
+            <AuthGuard allowedRoles={['staff']}>
+              <TakeOrder />
+            </AuthGuard>
+          } />
+          <Route path="/staff/kitchen" element={
+            <AuthGuard allowedRoles={['staff']}>
+              <StaffKitchen />
+            </AuthGuard>
+          } />
+          <Route path="/staff/active-orders" element={
+            <AuthGuard allowedRoles={['staff']}>
+              <ActiveOrders />
+            </AuthGuard>
+          } />
           <Route path="/customer" element={
             <AuthGuard allowedRoles={['customer']}>
               <CustomerDashboard />
@@ -78,6 +105,21 @@ const App = () => (
           <Route path="/customer/menu" element={
             <AuthGuard allowedRoles={['customer']}>
               <MenuPage />
+            </AuthGuard>
+          } />
+          <Route path="/customer/reservations" element={
+            <AuthGuard allowedRoles={['customer']}>
+              <MyReservations />
+            </AuthGuard>
+          } />
+          <Route path="/customer/orders" element={
+            <AuthGuard allowedRoles={['customer']}>
+              <MyOrders />
+            </AuthGuard>
+          } />
+          <Route path="/customer/reviews" element={
+            <AuthGuard allowedRoles={['customer']}>
+              <Reviews />
             </AuthGuard>
           } />
           <Route path="/unauthorized" element={<Unauthorized />} />

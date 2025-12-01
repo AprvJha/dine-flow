@@ -2,19 +2,29 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Users } from 'lucide-react';
+import { ArrowLeft, Users, Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
+import { useState } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useToast } from '@/hooks/use-toast';
 
 const StaffManagement = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const [open, setOpen] = useState(false);
+  const [email, setEmail] = useState('');
+  const [staffRole, setStaffRole] = useState<string>('waiter');
 
-  const { data: staffMembers } = useQuery({
+  const { data: staffMembers, refetch } = useQuery({
     queryKey: ['staff-members'],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('staff_details')
-        .select('*');
+        .select('*, profiles(full_name)');
       if (error) throw error;
       return data;
     },
@@ -30,14 +40,64 @@ const StaffManagement = () => {
     }
   };
 
+  const handleAddStaff = async () => {
+    // This would normally require creating a user first via admin API
+    // For now, we'll show a message explaining the flow
+    toast({
+      title: 'Staff Addition',
+      description: 'To add staff: 1) Have them sign up with their email, 2) Update their role in user_roles to "staff", 3) Add their details to staff_details table.',
+    });
+    setOpen(false);
+  };
+
   return (
     <div className="min-h-screen bg-background p-6">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center gap-4 mb-6">
-          <Button variant="ghost" size="icon" onClick={() => navigate('/admin')}>
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <h1 className="text-3xl font-bold text-foreground">Staff Management</h1>
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-4">
+            <Button variant="ghost" size="icon" onClick={() => navigate('/admin')}>
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <h1 className="text-3xl font-bold text-foreground">Staff Management</h1>
+          </div>
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+              <Button>
+                <Plus className="w-4 h-4 mr-2" />
+                Add Staff
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Add New Staff Member</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div>
+                  <Label>Staff Email</Label>
+                  <Input 
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="staff@example.com"
+                  />
+                </div>
+                <div>
+                  <Label>Role</Label>
+                  <Select value={staffRole} onValueChange={setStaffRole}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="waiter">Waiter</SelectItem>
+                      <SelectItem value="kitchen">Kitchen Staff</SelectItem>
+                      <SelectItem value="manager">Manager</SelectItem>
+                      <SelectItem value="cashier">Cashier</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <Button onClick={handleAddStaff} className="w-full">Add Staff Member</Button>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -46,7 +106,7 @@ const StaffManagement = () => {
               <CardHeader className="pb-2">
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-lg">
-                    Staff #{staff.id.slice(0, 8)}
+                    {(staff as any).profiles?.full_name || `Staff Member`}
                   </CardTitle>
                   <Badge className={getRoleBadgeColor(staff.staff_role)}>
                     {staff.staff_role}
@@ -68,6 +128,7 @@ const StaffManagement = () => {
             <CardContent className="flex flex-col items-center justify-center py-12">
               <Users className="h-12 w-12 text-muted-foreground mb-4" />
               <p className="text-muted-foreground">No staff members found</p>
+              <p className="text-sm text-muted-foreground mt-2">Add staff members to manage your team</p>
             </CardContent>
           </Card>
         )}

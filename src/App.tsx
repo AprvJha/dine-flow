@@ -23,6 +23,7 @@ import StaffTables from "./pages/staff/StaffTables";
 import TakeOrder from "./pages/staff/TakeOrder";
 import StaffKitchen from "./pages/staff/StaffKitchen";
 import ActiveOrders from "./pages/staff/ActiveOrders";
+import CleaningQueue from "./pages/staff/CleaningQueue";
 import Unauthorized from "./pages/Unauthorized";
 import NotFound from "./pages/NotFound";
 
@@ -95,6 +96,11 @@ const App = () => (
           <Route path="/staff/active-orders" element={
             <AuthGuard allowedRoles={['staff']}>
               <ActiveOrders />
+            </AuthGuard>
+          } />
+          <Route path="/staff/cleaning" element={
+            <AuthGuard allowedRoles={['staff']}>
+              <CleaningQueue />
             </AuthGuard>
           } />
           <Route path="/customer" element={

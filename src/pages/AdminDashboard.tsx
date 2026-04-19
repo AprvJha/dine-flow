@@ -22,7 +22,7 @@ const AdminDashboard = () => {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    navigate('/auth');
+    window.location.href = '/auth';
   };
 
   const { data: todayOrders } = useQuery({
@@ -104,7 +104,7 @@ const AdminDashboard = () => {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <Button variant="ghost" size="icon" className="text-secondary-foreground hover:bg-secondary-foreground/10">
+            <Button variant="ghost" size="icon" onClick={() => navigate('/admin/settings')} className="text-secondary-foreground hover:bg-secondary-foreground/10">
               <Settings className="w-5 h-5" />
             </Button>
             <Button variant="outline" onClick={handleLogout} className="border-secondary-foreground/20 text-secondary-foreground hover:bg-secondary-foreground/10">

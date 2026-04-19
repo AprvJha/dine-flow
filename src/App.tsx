@@ -20,6 +20,7 @@ import KitchenDisplay from "./pages/admin/KitchenDisplay";
 import OrdersManagement from "./pages/admin/OrdersManagement";
 import ReservationsManagement from "./pages/admin/ReservationsManagement";
 import Billing from "./pages/admin/Billing";
+import AdminSettings from "./pages/admin/Settings";
 import StaffTables from "./pages/staff/StaffTables";
 import TakeOrder from "./pages/staff/TakeOrder";
 import StaffKitchen from "./pages/staff/StaffKitchen";
@@ -77,6 +78,11 @@ const App = () => (
           <Route path="/admin/billing" element={
             <AuthGuard allowedRoles={['admin']}>
               <Billing />
+            </AuthGuard>
+          } />
+          <Route path="/admin/settings" element={
+            <AuthGuard allowedRoles={['admin']}>
+              <AdminSettings />
             </AuthGuard>
           } />
           <Route path="/staff" element={

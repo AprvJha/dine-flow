@@ -394,7 +394,7 @@ export type Database = {
         | "seated"
         | "cancelled"
         | "completed"
-      staff_role: "waiter" | "kitchen" | "manager" | "cashier"
+      staff_role: "waiter" | "kitchen" | "manager" | "cashier" | "cleaner"
       table_status: "available" | "occupied" | "reserved" | "cleaning"
     }
     CompositeTypes: {
@@ -532,7 +532,7 @@ export const Constants = {
         "cancelled",
         "completed",
       ],
-      staff_role: ["waiter", "kitchen", "manager", "cashier"],
+      staff_role: ["waiter", "kitchen", "manager", "cashier", "cleaner"],
       table_status: ["available", "occupied", "reserved", "cleaning"],
     },
   },
